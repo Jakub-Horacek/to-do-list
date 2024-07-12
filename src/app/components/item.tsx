@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ItemProps {
+  id: string;
   name: string;
   completed?: boolean;
+  onDelete: (id: string) => void;
 }
 
-const Item: React.FC<ItemProps> = ({ name, completed = false }) => {
+const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete }) => {
   const [itemName, setName] = useState(name);
   const [itemCompleted, setCompleted] = useState(completed);
   const [actionsExpanded, setActionsExpanded] = useState(false);
@@ -16,11 +18,32 @@ const Item: React.FC<ItemProps> = ({ name, completed = false }) => {
   ];
 
   function deleteItem() {
-    // This is a placeholder function. We'll implement this later.
+    fetch(`https://6691473c26c2a69f6e8f3485.mockapi.io/to-do/items/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      onDelete(id);
+    });
   }
 
   function toggleCompleted() {
     setCompleted(!itemCompleted);
+    fetch(`https://6691473c26c2a69f6e8f3485.mockapi.io/to-do/items/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed: !itemCompleted }),
+    });
+  }
+
+  function updateName() {
+    fetch(`https://6691473c26c2a69f6e8f3485.mockapi.io/to-do/items/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: itemName }),
+    });
   }
 
   return (
@@ -30,6 +53,7 @@ const Item: React.FC<ItemProps> = ({ name, completed = false }) => {
           type="text"
           value={itemName}
           onChange={(e) => setName(e.target.value)}
+          onBlur={updateName}
           className={itemCompleted ? "item__name item__name--completed" : "item__name"}
         />
         <button className="to-do__action-expand" onClick={() => setActionsExpanded(!actionsExpanded)}>

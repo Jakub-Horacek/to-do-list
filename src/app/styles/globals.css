@@ -57,6 +57,24 @@ button:hover {
   gap: var(--gap);
 }
 
+.list__actions {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.list__action {
+  border-radius: 0;
+}
+
+.list__action--danger {
+  color: #ff0000;
+}
+
+.list__action--danger:hover {
+  border: 2px solid #ff0000;
+}
+
 .to-do__item {
   display: flex;
   flex-direction: column;
@@ -89,13 +107,16 @@ button:hover {
   display: flex;
   flex-direction: row;
   gap: 2px;
+  justify-content: center;
 }
 
+.list__actions > *:first-child,
 .item__content > *:first-child,
 .item__actions > *:first-child {
   border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
+.list__actions > *:last-child,
 .item__content > *:last-child,
 .item__actions > *:last-child {
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
