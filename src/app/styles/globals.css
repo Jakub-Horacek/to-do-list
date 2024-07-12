@@ -67,14 +67,6 @@ button:hover {
   border-radius: 0;
 }
 
-.list__action--danger {
-  color: #ff0000;
-}
-
-.list__action--danger:hover {
-  border: 2px solid #ff0000;
-}
-
 .to-do__item {
   display: flex;
   flex-direction: column;
@@ -132,4 +124,14 @@ button:hover {
 .item__name--completed {
   text-decoration: line-through;
   color: #00ff00 !important;
+}
+
+.item__action--danger,
+.list__action--danger {
+  color: #ff0000;
+}
+
+.item__action--danger:hover,
+.list__action--danger:hover {
+  border: 2px solid #ff0000;
 }
