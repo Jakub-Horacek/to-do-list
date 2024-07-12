@@ -14,8 +14,8 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
   const [actionsExpanded, setActionsExpanded] = useState(false);
 
   const actions = [
-    { name: "Delete item", action: () => deleteItem() },
     { name: itemCompleted ? "Mark uncompleted" : "Mark completed", action: () => toggleCompleted() },
+    { name: "Delete item", action: () => deleteItem() },
   ];
 
   // Delete the item
@@ -65,23 +65,23 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
           onBlur={updateName}
           className={itemCompleted ? "item__name item__name--completed" : "item__name"}
         />
+        {actionsExpanded && (
+          <>
+            {actions.map((action) => (
+              <button
+                key={action.name}
+                onClick={action.action}
+                className={action.name.toLowerCase().includes("delete") ? "item__action item__action--danger" : "item__action"}
+              >
+                {action.name}
+              </button>
+            ))}
+          </>
+        )}
         <button className="to-do__action-expand" onClick={() => setActionsExpanded(!actionsExpanded)}>
           ⋮
         </button>
       </div>
-      {actionsExpanded && (
-        <div className="item__actions">
-          {actions.map((action) => (
-            <button
-              key={action.name}
-              onClick={action.action}
-              className={action.name.toLowerCase().includes("delete") ? "item__action item__action--danger" : "item__action"}
-            >
-              {action.name}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

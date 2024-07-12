@@ -31,7 +31,7 @@ button {
   background: rgba(0, 0, 0, 0.5);
   color: var(--text-color);
   width: auto;
-  height: 52px;
+  height: 51px;
   font-size: small;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -43,34 +43,51 @@ button:hover {
   background: rgba(0, 0, 0, 1);
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.to-do__list-wrapper {
   position: relative;
-  padding: 4rem 0;
+  max-width: var(--max-width);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap);
 }
 
 .to-do__list {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
+  max-height: calc(100vh - 120px); /* Adjust based on your header height */
+  overflow-y: auto;
+  width: 100%;
 }
 
 .list__actions {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  padding: var(--gap);
   display: flex;
   flex-direction: row;
   gap: 2px;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  width: 100%;
 }
 
 .list__action {
   border-radius: 0;
+  background: var(--accent-color);
+}
+
+.list__action:hover {
+  background: transparent;
 }
 
 .to-do__item {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch; /* Ensures item stretches to full width */
   gap: 2px;
   border: 2px solid transparent;
   border-radius: var(--border-radius);
@@ -94,12 +111,28 @@ button:hover {
   background: rgba(0, 0, 0, 1);
 }
 
+.item__content {
+  display: flex;
+  flex: 1; /* Take up remaining space */
+  justify-content: space-between; /* Align items at start and end */
+  align-items: center; /* Center items vertically */
+}
+
+.item__name {
+  flex: 1; /* Expand to take remaining space */
+}
+
+.to-do__action-expand {
+  padding: var(--gap); /* Add padding to button */
+}
+
 .item__content,
 .item__actions {
   display: flex;
   flex-direction: row;
   gap: 2px;
   justify-content: center;
+  width: 100%;
 }
 
 .list__actions > *:first-child,
@@ -114,16 +147,13 @@ button:hover {
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
-.item__content--expanded > *:first-child {
-  border-radius: var(--border-radius) 0 0 0;
-}
-.item__content--expanded > *:last-child {
-  border-radius: 0 var(--border-radius) 0 0;
-}
-
 .item__name--completed {
   text-decoration: line-through;
   color: #00ff00 !important;
+}
+
+.item__action {
+  border-radius: 0;
 }
 
 .item__action--danger,
