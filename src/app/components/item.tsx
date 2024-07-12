@@ -78,9 +78,7 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
             ))}
           </>
         )}
-        <button className="to-do__action-expand" onClick={() => setActionsExpanded(!actionsExpanded)}>
-          ⋮
-        </button>
+        <button className="to-do__action-expand" onClick={() => setActionsExpanded(!actionsExpanded)}></button>
       </div>
     </div>
   );
