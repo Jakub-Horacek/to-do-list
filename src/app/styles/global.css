@@ -274,6 +274,10 @@ button:hover {
     width: 100%;
   }
 
+  .item__due-date {
+    width: 100%;
+  }
+
   .list__actions > *:first-child {
     border-radius: var(--border-radius) var(--border-radius) 0 0;
   }
