@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faCheck, faXmark, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import "@/app/styles/animations.css";
@@ -16,12 +16,30 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
   const [itemName, setName] = useState(name);
   const [itemCompleted, setCompleted] = useState(completed);
   const [actionsExpanded, setActionsExpanded] = useState(false);
-  const [actionsAnimation, setActionsAnimation] = useState(isMobile ? "" : "slide-out");
+  const [animation, setAnimation] = useState("slide-out");
 
   const actions = [
     { name: itemCompleted ? "Mark uncompleted" : "Mark completed", icon: itemCompleted ? faXmark : faCheck, action: () => toggleCompleted() },
     { name: "Delete item", icon: faTrashCan, action: () => deleteItem() },
   ];
+
+  useEffect(() => {
+    function initCssVariables() {
+      const root = document.documentElement;
+
+      const actionWidth = getComputedStyle(root).getPropertyValue("--action-width");
+      const actionWidthNumber = Number(actionWidth.replace("px", ""));
+
+      const actionsWidth = `${(actionWidthNumber + 1) * actions.length}px`;
+      root.style.setProperty("--actions-width", actionsWidth);
+    }
+
+    if (isMobile) {
+      setAnimation("");
+    }
+
+    initCssVariables();
+  }, [isMobile, actions.length]);
 
   const toggleExpanded = () => {
     if (isMobile) {
@@ -30,14 +48,14 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
     }
 
     if (actionsExpanded) {
-      setActionsAnimation("slide-out");
+      setAnimation("slide-out");
       setTimeout(() => {
         setActionsExpanded(false);
       }, 500);
     } else {
       setActionsExpanded(true);
       setTimeout(() => {
-        setActionsAnimation("slide-in");
+        setAnimation("slide-in");
       }, 100);
     }
   };
@@ -90,7 +108,7 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
           className={itemCompleted ? "item__name item__name--completed" : "item__name"}
         />
         {actionsExpanded && (
-          <span className={`item__actions ${actionsAnimation}`}>
+          <span className={`item__actions ${animation}`}>
             {actions.map((action) => (
               <button
                 key={action.name}

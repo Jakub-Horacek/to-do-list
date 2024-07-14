@@ -156,6 +156,7 @@ button:hover {
 
 .item__action {
   border-radius: 0;
+  width: var(--action-width);
 }
 
 .item__action--danger,
