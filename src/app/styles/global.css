@@ -275,7 +275,7 @@ button:hover {
   }
 
   .item__due-date {
-    width: 100%;
+    width: 90%;
   }
 
   .list__actions > *:first-child {
