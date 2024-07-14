@@ -1,0 +1,38 @@
+.fade-in {
+  opacity: 1;
+  transition: all var(--animation-duration) ease;
+  color: red;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: all var(--animation-duration) ease;
+  color: red;
+}
+
+.slide-in {
+  width: var(--actions-width);
+  opacity: 1;
+  transition: all var(--animation-duration) ease;
+  transform-origin: right;
+}
+
+.slide-out {
+  width: 0;
+  opacity: 0.8;
+  transition: all var(--animation-duration) ease;
+  transform-origin: right;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 600px) {
+  .slide-in {
+    opacity: 1;
+    transition: none;
+  }
+
+  .slide-out {
+    opacity: 0;
+    transition: none;
+  }
+}

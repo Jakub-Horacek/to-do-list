@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan, faCheck, faXmark, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import "@/app/styles/animations.css";
 
 interface ItemProps {
   id: string;
@@ -9,14 +12,35 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUpdate }) => {
+  const isMobile = window.innerWidth < 768;
   const [itemName, setName] = useState(name);
   const [itemCompleted, setCompleted] = useState(completed);
   const [actionsExpanded, setActionsExpanded] = useState(false);
+  const [actionsAnimation, setActionsAnimation] = useState(isMobile ? "" : "slide-out");
 
   const actions = [
-    { name: itemCompleted ? "Mark uncompleted" : "Mark completed", action: () => toggleCompleted() },
-    { name: "Delete item", action: () => deleteItem() },
+    { name: itemCompleted ? "Mark uncompleted" : "Mark completed", icon: itemCompleted ? faXmark : faCheck, action: () => toggleCompleted() },
+    { name: "Delete item", icon: faTrashCan, action: () => deleteItem() },
   ];
+
+  const toggleExpanded = () => {
+    if (isMobile) {
+      setActionsExpanded(!actionsExpanded);
+      return;
+    }
+
+    if (actionsExpanded) {
+      setActionsAnimation("slide-out");
+      setTimeout(() => {
+        setActionsExpanded(false);
+      }, 500);
+    } else {
+      setActionsExpanded(true);
+      setTimeout(() => {
+        setActionsAnimation("slide-in");
+      }, 100);
+    }
+  };
 
   // Delete the item
   function deleteItem() {
@@ -66,19 +90,24 @@ const Item: React.FC<ItemProps> = ({ id, name, completed = false, onDelete, onUp
           className={itemCompleted ? "item__name item__name--completed" : "item__name"}
         />
         {actionsExpanded && (
-          <>
+          <span className={`item__actions ${actionsAnimation}`}>
             {actions.map((action) => (
               <button
                 key={action.name}
                 onClick={action.action}
                 className={action.name.toLowerCase().includes("delete") ? "item__action item__action--danger" : "item__action"}
+                title={action.name}
               >
-                {action.name}
+                <span className="action__name">{action.name}</span>
+                <FontAwesomeIcon icon={action.icon} className="action__icon" />
               </button>
             ))}
-          </>
+          </span>
         )}
-        <button className="to-do__action-expand" onClick={() => setActionsExpanded(!actionsExpanded)}></button>
+        <button className="to-do__action-expand" onClick={() => toggleExpanded()}>
+          <span className="action__name">Actions</span>
+          <FontAwesomeIcon icon={faAngleLeft} className={actionsExpanded ? "expander__icon expander__icon--expanded" : "expander__icon"} />
+        </button>
       </div>
     </div>
   );

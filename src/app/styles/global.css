@@ -64,6 +64,7 @@ button:hover {
   gap: var(--gap);
   max-height: calc(100vh - 120px); /* Adjust based on your header height */
   overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
 }
 
@@ -119,8 +120,10 @@ button:hover {
 .item__content {
   display: flex;
   flex: 1; /* Take up remaining space */
-  justify-content: space-between; /* Align items at start and end */
+  justify-content: center; /* Align items at start and end */
   align-items: center; /* Center items vertically */
+  width: 100%;
+  gap: 2px;
 }
 
 .item__name {
@@ -131,17 +134,9 @@ button:hover {
   padding: var(--gap); /* Add padding to button */
 }
 
-.to-do__action-expand::before {
-  content: "⋮";
-}
-
-.item__content,
 .item__actions {
   display: flex;
-  flex-direction: row;
   gap: 2px;
-  justify-content: center;
-  width: 100%;
 }
 
 .list__actions > *:first-child,
@@ -173,10 +168,35 @@ button:hover {
   border: 2px solid #ff0000;
 }
 
+.action__name {
+  display: none;
+}
+
+.action__icon,
+.expander__icon {
+  display: block;
+  width: 10.5px;
+  transition: var(--transition);
+}
+
+.expander__icon--expanded {
+  transform: rotate(180deg);
+}
+
 /* Mobile view adjustments */
 @media (max-width: 600px) {
-  .to-do__action-expand::before {
-    content: "toggle actions";
+  /* last child of to-do__list */
+  .to-do__list > *:last-child {
+    margin-bottom: var(--gap);
+  }
+
+  .action__name {
+    display: block;
+  }
+
+  .action__icon,
+  .expander__icon {
+    display: none;
   }
 
   .list__actions {
@@ -194,6 +214,21 @@ button:hover {
   .item__content * {
     width: 90%;
     font-size: large !important;
+    align-self: center;
+  }
+
+  .action__name {
+    width: 100%;
+    margin: 0;
+  }
+
+  .item__actions {
+    flex-direction: column;
+    width: 90% !important;
+  }
+
+  .item__action {
+    width: 100%;
   }
 
   .list__actions > *:first-child {
