@@ -53,3 +53,5 @@ Open http://localhost:3000 with your browser to see the application running.
 - Responsive design that adapts to mobile and desktop views
 - Add, edit, and delete to-do items
 - Stylish user interface
+- Add due dates to to-do items
+- Filter to-do items by completed / uncompleted status

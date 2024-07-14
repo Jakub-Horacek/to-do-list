@@ -106,6 +106,7 @@ const Item: React.FC<ItemProps> = ({ id, name, dueDate, completed = false, onDel
     if (hasDueDate) {
       setDueDate("");
       setHasDueDate(false);
+      updateDueDate();
     } else {
       setHasDueDate(true);
     }
