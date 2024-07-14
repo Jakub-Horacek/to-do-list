@@ -21,8 +21,28 @@ main {
   height: 100vh;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  padding: var(--gap);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius) 0 0 0;
+  margin: auto;
+}
+
+.footer__paragraph {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--gap) / 2);
+  margin: 0;
+  padding: 0;
+}
+
 a {
-  color: inherit;
+  color: #fff584;
   text-decoration: none;
 }
 
@@ -61,14 +81,14 @@ button:hover {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap);
-  height: inherit;
+  height: 100%;
 }
 
 .to-do__list {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
-  max-height: calc(100vh - 120px); /* Adjust based on your header height */
+  max-height: calc(100vh - (120px + var(--gap))); /* Adjust based on your header height */
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
@@ -201,6 +221,16 @@ button:hover {
 
 /* Mobile view adjustments */
 @media (max-width: 600px) {
+  html,
+  body,
+  main {
+    height: 100dvh;
+  }
+
+  footer {
+    display: none;
+  }
+
   /* last child of to-do__list */
   .to-do__list > *:last-child {
     margin-bottom: var(--gap);
