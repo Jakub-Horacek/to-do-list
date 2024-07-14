@@ -1,16 +1,22 @@
 "use client";
 import Item from "./item";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const List: React.FC = () => {
   const [items, setItems] = useState<{ id: string; name: string; completed: boolean; dueDate?: string }[]>([]);
   const [completedVisible, setCompletedVisible] = useState(true);
 
+  const updateMetadata = useCallback(() => {
+    document.title = `To-Do List (${items.length})`;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", `A simple to-do list application with ${items.length} items.`);
+  }, [items.length]);
+
   useEffect(() => {
     fetch("https://6691473c26c2a69f6e8f3485.mockapi.io/to-do/items")
       .then((response) => response.json())
       .then((data) => setItems(data));
-  }, []);
+    updateMetadata();
+  }, [updateMetadata]);
 
   function addItem() {
     const newItem = { name: `Item ${items.length + 1}`, completed: false, dueDate: "" };
@@ -44,6 +50,7 @@ const List: React.FC = () => {
 
   function updateItem(id: string, updatedData: Partial<{ name: string; completed: boolean; dueDate?: string }>) {
     setItems(items.map((item) => (item.id === id ? { ...item, ...updatedData } : item)));
+    updateMetadata();
   }
 
   return (
