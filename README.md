@@ -55,3 +55,4 @@ Open http://localhost:3000 with your browser to see the application running.
 - Stylish user interface
 - Add due dates to to-do items
 - Filter to-do items by completed / uncompleted status
+- This project is also hosted online on GitHub Pages: [To-Do Application](https://jakub-horacek.github.io/to-do-list/)
