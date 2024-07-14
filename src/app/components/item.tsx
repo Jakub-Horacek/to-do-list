@@ -19,7 +19,7 @@ const Item: React.FC<ItemProps> = ({ id, name, dueDate, completed = false, onDel
   const [itemCompleted, setCompleted] = useState(completed);
   const [hasDueDate, setHasDueDate] = useState(false);
   const [actionsExpanded, setActionsExpanded] = useState(false);
-  const [animation, setAnimation] = useState("slide-out");
+  const [animation, setAnimation] = useState(isMobile ? "" : "slide-out");
 
   // Action buttons for the item
   const actions = [
@@ -49,13 +49,9 @@ const Item: React.FC<ItemProps> = ({ id, name, dueDate, completed = false, onDel
       root.style.setProperty("--actions-width", actionsWidth);
     }
 
-    if (isMobile) {
-      setAnimation("");
-    }
-
     isDueDateValid();
     initCssVariables();
-  }, [actions.length, isMobile, isDueDateValid]);
+  }, [actions.length, isDueDateValid]);
 
   // Toggle the expansion of actions
   const toggleExpanded = () => {

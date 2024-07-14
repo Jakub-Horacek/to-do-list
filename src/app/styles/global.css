@@ -121,9 +121,6 @@ button:hover {
   flex-direction: column;
   align-items: stretch; /* Ensures item stretches to full width */
   gap: 2px;
-  border: 2px solid transparent;
-  border-radius: var(--border-radius);
-  backdrop-filter: blur(10px);
   background: transparent;
 }
 
