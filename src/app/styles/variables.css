@@ -6,5 +6,6 @@
   --transition: 0.3s all ease-in-out;
   --animation-duration: 0.5s;
   --accent-color: #290330;
-  --action-width: 46.5px;
+  --action-width: 48.5px;
+  --default-item-height: 51px;
 }

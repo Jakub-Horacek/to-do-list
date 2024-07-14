@@ -3,7 +3,7 @@ import Item from "./item";
 import { useState, useEffect } from "react";
 
 const List: React.FC = () => {
-  const [items, setItems] = useState<{ id: string; name: string; completed: boolean }[]>([]);
+  const [items, setItems] = useState<{ id: string; name: string; completed: boolean; dueDate?: string }[]>([]);
   const [completedVisible, setCompletedVisible] = useState(true);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const List: React.FC = () => {
   }, []);
 
   function addItem() {
-    const newItem = { name: `Item ${items.length + 1}`, completed: false };
+    const newItem = { name: `Item ${items.length + 1}`, completed: false, dueDate: "" };
     fetch("https://6691473c26c2a69f6e8f3485.mockapi.io/to-do/items", {
       method: "POST",
       headers: {
@@ -42,7 +42,7 @@ const List: React.FC = () => {
     setItems([]);
   }
 
-  function updateItem(id: string, updatedData: Partial<{ name: string; completed: boolean }>) {
+  function updateItem(id: string, updatedData: Partial<{ name: string; completed: boolean; dueDate?: string }>) {
     setItems(items.map((item) => (item.id === id ? { ...item, ...updatedData } : item)));
   }
 
@@ -63,7 +63,15 @@ const List: React.FC = () => {
         {items
           .filter((item) => completedVisible || !item.completed)
           .map((item) => (
-            <Item key={item.id} id={item.id} name={item.name} completed={item.completed} onDelete={deleteItem} onUpdate={updateItem} />
+            <Item
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              completed={item.completed}
+              dueDate={item.dueDate}
+              onDelete={deleteItem}
+              onUpdate={updateItem}
+            />
           ))}
       </div>
     </div>
